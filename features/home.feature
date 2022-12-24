@@ -20,4 +20,4 @@ Scenario Outline: Check user dropdown menus.
         |  About           |  Version        |
         | Support          |Customer Support |
         | Change Password  | Update Password |
-        # | Logout           | Login           |
+        | Logout           | Login           |
