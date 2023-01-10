@@ -3,13 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
 
-@given(u'Login Page is displayed.')
-def launch_login_page(context):
-    context.driver = webdriver.Firefox()
-    context.driver.maximize_window()
-    context.driver.get('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    context.driver.implicitly_wait(10)
-# BACKGROUND step^^^
 
 # Negative test scenario using parametrization...
 @when(u'User enters username "{username}".')
@@ -27,17 +20,27 @@ def step_impl(context, password):
 def step_impl(context, text):
     sleep(5)
     assert text.lower() in context.driver.page_source.lower()
-    context.driver.quit()
+    context.logger.info(f"{text} displayed with invalid credentials")
    
 # Positive test scenario that covers feature file...
+
+@when(u'User enters username "Admin"')
+def step_impl(context):
+    context.driver.find_element(By.NAME, "username").send_keys("Admin")
+       
+
+@when(u'User enters password "admin123"')
+def step_impl(context):
+     context.driver.find_element(By.NAME, "password").send_keys("admin123")
+       
+
 @when(u'User clicks login button.')
-def click_login(context):
+def step_impl(context):
     context.driver.find_element(By.CSS_SELECTOR, ".oxd-button").click()
+
+
+@then(u'Home page should display.')
+def step_impl(context):
     sleep(5)
-
-
-@then(u'New page will display.')
-def homepage(context):
-    assert context.driver.find_element(By.CSS_SELECTOR, ".oxd-userdropdown-name").is_displayed()
-    context.driver.quit()
-    
+    assert context.driver.find_element(By.CSS_SELECTOR, '.oxd-userdropdown').is_displayed()
+    context.logger.info(f"Successfully landed on Homepage")

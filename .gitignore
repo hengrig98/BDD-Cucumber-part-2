@@ -1,0 +1,18 @@
+# test evidence 
+evidence/
+logs/
+reports/
+assets/
+.geckodriver.log
+
+
+
+# system files/folder
+
+__pycache__/
+geckodriver.log
+
+
+
+
+

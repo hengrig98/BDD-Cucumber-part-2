@@ -12,5 +12,9 @@ def click_user_menu(context):
 @when(u'User clicks user menu option "{option}".')     
 def checking_for_menu_options(context, option):
     context.driver.find_element(By.LINK_TEXT, f'{option}').click()
-    # sleep(5)
-    # assert "{text}" in context.driver.page_source
+    context.logger.info(f"Successfully clicked {option}")
+    sleep(5)
+
+def check_for_valid_text(context, text):
+    assert text.lower() in context.driver.page_source.lower()
+    context.logger.info(f"{text} displays clicking dropdown menu option.")
